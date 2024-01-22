@@ -3,9 +3,6 @@ Auxiliary functions. Some of these functions are from:
 
 https://github.com/bianchifrancesca/quadratic_chabauty
 
-These functions were also used for some of the computations of
-[BBBM19].
-
 REFERENCES:
 
 - [BBBM19] \J. S. Balakrishnan, A. Besser, F. Bianchi, J. S. Mueller,

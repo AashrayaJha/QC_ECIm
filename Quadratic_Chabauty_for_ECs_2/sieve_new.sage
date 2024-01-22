@@ -1,5 +1,16 @@
+r""" Generalises the sieve done for the Mordell curve y^2=x^3-4 by Francesca Bianchi at
+https://github.com/bianchifrancesca/quadratic_chabauty. The novel features of this code are: 
+
+1)It can deal with any curve E/K given two quadratic Chabauty sets and a particular condition 
+on the cardinalities as described in section 4 of https://arxiv.org/pdf/2311.01691.pdf.
+
+"""
+
 def reduction_information_0(E,extra_points_p,q,gens=[]):
-    """This code will work OK if the bigger prime for the sieve is greater than equal to 9"""
+    
+    """This code will work if the bigger prime for the sieve is greater than equal to 9. For smaller primes,
+    one might need to do an analysis under some circumstances."""
+    
     L=E.base_ring()
     p = extra_points_p[0][0].base_ring().residue_characteristic()
     (prime1,p1,psi1,Fp1),(prime2,p2,psi2,Fp2)=compatible_primes_and_embeddings_and_residue_fields(L,p)
@@ -211,35 +222,3 @@ def sieve_for_ECs(E,extra_points_p,extra_points_q,gens=[]):
     remaining_points=comparing_log_and_red(log_p,log_q,red_Np,red_Nq,extra_points_p,extra_points_q)
 
     return remaining_points
-
-def reduction_information(E,extra_points_p,q,gens=[]):
-    L=E.base_ring()
-    p = extra_points_p[0][0].base_ring().residue_characteristic()
-    (prime1,p1,psi1,Fp1),(prime2,p2,psi2,Fp2)=compatible_primes_and_embeddings_and_residue_fields(L,p)
-    EFp1,EFp2,EQp1,EQp2=find_base_change(E,p1,psi1,p2,psi2)
-    K1=psi1.codomain()
-    K2=psi2.codomain()
-    print(EFp1.abelian_group(),EFp2.abelian_group())
-    if gens==[]:
-         P1,P2=lin_indep_generators(E)
-    else:
-         P1,P2=gens
-    P1Fp1 = EFp1(P1)
-    P1Fp2 = EFp2(P1)
-    P2Fp1 = EFp1(P2)
-    P2Fp2 = EFp2(P2)
-    ord_1 = lcm(P1Fp1.order(), P1Fp2.order())
-    ord_2 = lcm(P2Fp1.order(), P2Fp2.order())
-    coeffs_mod_Np = [[] for i in range(len(extra_points_p))]
-    for i in range(len(extra_points_p)):
-        #if i%10==0:
-             #print("Done with",i)
-        Q  = extra_points_p[i]
-        Q1 = EFp1(Q[0][0], Q[0][1])
-        Q2 = EFp2(Q[1][0], Q[1][1])
-        for n in range(ord_1):
-            for m in range(ord_2):
-                 if n*P1Fp1 + m*P2Fp1 == Q1 and n*P1Fp2 + m*P2Fp2 == Q2:
-                    coeffs_mod_Np[i].append([n,m]) #n is modulo ord_1, m is modulo ord_2
-
-    return coeffs_mod_Np

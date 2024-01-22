@@ -1,14 +1,14 @@
 r"""
-Quadratic Chabauty for elliptic curves over `\QQ`, base-changed
-to imaginary quadratic fields.
+Given an imaginary quadratic field $L$ (of class number 1), and an elliptic curve $E$ such that $E(L)$ has rank $2$,
+the code will output the quadratic Chabauty set for integral points of a chosen integral model of $E$.
 
 The main function is `quad_chab_ell_im_quad`.
-See its docstring for details on input and output and for examples.
 
-Parts of this code were used also for computations in [BBBM19] and [Bia19].
-See also:
+The code has been built on the code by Francesca Bianchi at 
+https://github.com/bianchifrancesca/quadratic_chabauty. The novel features of this code are:
 
-https://github.com/bianchifrancesca/quadratic_chabauty
+1)It can deal with curves which are not base changes from the rationals.
+2)It can deal with curves which have non-trivial contributions at bad places for the anticyclotmic height. 
 
 
 REFERENCES:
@@ -21,8 +21,8 @@ REFERENCES:
   "Shadow lines in the arithmetic of elliptic curves".
   In" Directions in number theory, volume 3".
 
-- [Bia19] \F. Bianchi, "Quadratic Chabauty for (bi)elliptic curves
-  and Kim's conjecture". To appear in "Algebra Number Theory".
+- [Bia20] Francesca Bianchi, Q(√−3)-Integral Points on a Mordell curve,
+   International Congress on Mathematical Software, Springer, 2020, pp. 39–50.
 
 
 """
