@@ -1,15 +1,9 @@
 r"""
-Quadratic Chabauty for elliptic curves over imaginary quadratic fields.
+This code in this file is based on Francesca Bianchi's implementation at 
+https://github.com/bianchifrancesca/QC_elliptic_imaginary_quadratic_rank_2/blob/master/quad_chab_ell_im_quad.sage.
 
-The main function is `quad_chab_ell_im_quad`.
-See its docstring for details on input and output and for examples.
-
-Parts of this code were used also for computations in [BBBM19] and [Bia19].
-See also:
-
-https://github.com/bianchifrancesca/quadratic_chabauty
-
-
+We have extended the code so that we can also handle curves which are not base changes from the rationals and 
+"""
 REFERENCES:
 
 - [BBBM19] \J. S. Balakrishnan, A. Besser, F. Bianchi, J. S. Mueller,
@@ -23,7 +17,9 @@ REFERENCES:
 - [Bia19] \F. Bianchi, "Quadratic Chabauty for (bi)elliptic curves
   and Kim's conjecture". To appear in "Algebra Number Theory".
 
-
+- [MST06] Barry Mazur, William Stein, and John Tate. 
+  "Computation of p-adic heights and log convergence."
+  Doc. Math, pages 577–614, 2006.
 """
 
 def anticyc_padic_height(E, P, p, prec=25, bernardi=False, multi=1,M=25):
