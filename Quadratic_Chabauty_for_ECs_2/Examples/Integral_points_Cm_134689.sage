@@ -21,8 +21,8 @@ QCset_q=quad_chab_ell_im_quad(E, q, n, double_root_prec, int_list=int_list , gen
 
 print("Found QC set at q=13")
 
-extra_points_p=QCset_p[2]+QCset_q[3]
-extra_points_q=QCset_p[2]+QCset_q[3]
+extra_points_p=QCset_p[2]+QCset_p[3]
+extra_points_q=QCset_q[2]+QCset_q[3]
 
 red_Nq=reduction_information_0(E,extra_points_p,q,gens=gens)
 red_Np=reduction_information_0(E,extra_points_q,p,gens=gens)
