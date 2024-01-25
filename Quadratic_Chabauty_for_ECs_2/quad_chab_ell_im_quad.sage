@@ -36,12 +36,8 @@ def quad_chab_ell_im_quad(E, p, n, double_root_prec, int_list = [], gens=[], up_
     Do quadratic Chabauty for an elliptic curve `E` over
     an imaginary quadratic field `L`.
     INPUT:
-
-    - ``L`` -- an imaginary quadratic field, such that `E(L)` has rank 2
-      and such that all the primes of bad reduction for `E` with non-trivial
-      Tamagawa number are ramified or inert in `L`. What are the conditions one needs?
-
-    - ``p`` -- a prime of good reduction for `E`, split in `L`.
+    - ``E``  -- An elliptic curve over an imaginary quadratic field $L$, such that rank(E(L))=2
+    - ``p`` -- a prime of good, ordinary reduction for `E`, split in `L`.
 
     - ``n`` -- `p`-adic precision.
 
@@ -56,9 +52,6 @@ def quad_chab_ell_im_quad(E, p, n, double_root_prec, int_list = [], gens=[], up_
       the given residue pair contains the points `P_1,..,P_m` in
       `int_list`, then the statement "A double root in a disc with the known
       integral points [P_1,..., P_m]" is printed.
-
-    - ``bernardi``-- True/False (default False): if False and `p` is `\ge 5` and ordinary,
-      the Mazur-Tate sigma function is used; otherwise, the Bernardi one.
 
     - ``up_to_auto`` -- True/False (default False): If True, the points in the
       output will be up to hyperelliptic involution and reversing.
@@ -102,61 +95,7 @@ def quad_chab_ell_im_quad(E, p, n, double_root_prec, int_list = [], gens=[], up_
 
       If the `p`-adic precision is too low, some integral points may not be recognised
       as such and will appear in (3) or (4).
-
-    EXAMPLES:
-
-        sage: E = EllipticCurve("91a1")
-        sage: K.<a> = QuadraticField(-1)
-        sage: int_points = [(-a - 1, a - 2, 1), (-a - 1, -a + 1, 1), (a - 1, -a - 2, 1), (a - 1, a + 1, 1), (-a, -1, 1), (-a, 0, 1), (0,-1, 1), (0, 0, 1),
-        ....: (a, - 1, 1), (a, 0, 1), (1, -2, 1), (1, 1, 1), (-42*a + 2, -206*a - 179, 1), (-42*a + 2, 206*a + 178, 1), (42*a + 2, 206*a - 179, 1), (42*a +
-        ....:  2, -206*a + 178, 1), (3, -6, 1), (3, 5, 1), (-2*a + 4, 6*a - 8, 1), (-2*a + 4, -6*a + 7, 1), (2*a + 4, -6*a - 8, 1), (2*a + 4, 6*a + 7, 1)]
-        sage: A = quad_chab_ell_im_quad(E, 5, 20, 5, K, int_list = int_points)
-        W is [0]
-        sage: print "Q-integral points recovered:", A[0]
-        Q-integral points recovered: [(0 : 0 : 1), (0 : -1 : 1), (3 : 5 : 1), (3 : -6 : 1), (1 : -2 : 1), (1 : 1 : 1)]
-        sage: print "Other integral points recovered: ", A[1]
-        Other integral points recovered: [(2*a + 4 : 6*a + 7 : 1), (2*a + 4 : -6*a - 8 : 1), (-2*a + 4 : 6*a - 8 : 1), (a : 0 : 1), (42*a + 2 : -206*a + 178
-        : 1), (-2*a + 4 : -6*a + 7 : 1), (a : -1 : 1), (42*a + 2 : 206*a - 179 : 1), (-a : 0 : 1), (a - 1 : -a - 2 : 1), (-a : -1 : 1), (a - 1 : a + 1 : 1),
-        (-42*a + 2 : -206*a - 179 : 1), (-a - 1 : -a + 1 : 1), (-42*a + 2 : 206*a + 178 : 1), (-a - 1 : a - 2 : 1)]
-        sage: print "Number of extra points:", len(A[2]) + len(A[3])
-        Number of extra points: 98
-        sage: print "Number of discs for which double roots were unresolved:", A[4]
-        Number of discs for which double roots were unresolved: 0
-
-
-    If, in the same example, we do not provide a list of known integral points, we need to increase `double_root_prec`;
-    furthermore, if we do not increase `n`, the integral points (-42*a + 2 : -206*a - 179 : 1), (-42*a + 2 : 206*a + 178 : 1)
-    (42*a + 2 : 206*a - 179 : 1), (42*a + 2 : -206*a + 178 : 1) will not appear in A[1], but their images under the completion
-    maps will be in A[3]::
-
-        sage: A = quad_chab_ell_im_quad(E, 5, 20, 7, K)
-        W is [0]
-        sage: print len(int_points) - (len(A[0]) + len(A[1]))
-        4
-        sage: print A[0]
-        [(0 : 0 : 1), (0 : -1 : 1), (3 : 5 : 1), (3 : -6 : 1), (1 : -2 : 1), (1 : 1 : 1)]
-        sage: print A[1]
-        [(2*a + 4 : 6*a + 7 : 1), (2*a + 4 : -6*a - 8 : 1), (-2*a + 4 : 6*a - 8 : 1), (a : 0 : 1), (-2*a + 4 : -6*a + 7 : 1), (a : -1 : 1), (-a : 0 : 1), (a
-        - 1 : -a - 2 : 1), (-a : -1 : 1), (a - 1 : a + 1 : 1), (-a - 1 : -a + 1 : 1), (-a - 1 : a - 2 : 1)]
-        sage: f1 = (-42*a+2).minpoly()
-        sage: f2 = (-206*a - 179).minpoly()
-        sage: for P in A[3]:
-        ....:     if f1(P[0][0]) == 0 and f2(P[0][1]) == 0 and f1(P[1][0]) == 0 and f2(P[1][1]) == 0:
-        ....:         print P
-        ....:         print "---------"
-        [(3 + 5 + 4*5^2 + 3*5^3 + 5^4 + 4*5^5 + 5^6 + 4*5^7 + 4*5^8 + 2*5^9 + 4*5^10 + 3*5^11 + 3*5^12 + 2*5^13 + O(5^14) : 4 + 3*5^2 + 3*5^3 + 5^4 + 5^6 +
-        5^7 + 2*5^8 + 2*5^9 + 3*5^10 + 4*5^11 + O(5^14) : 1 + O(5^20)), (1 + 4*5 + 5^3 + 3*5^4 + 3*5^6 + 2*5^9 + 5^11 + 5^12 + 2*5^13 + O(5^14) : 3 + 2*5 +
-        2*5^2 + 3*5^3 + 2*5^4 + 4*5^5 + 3*5^6 + 3*5^7 + 2*5^8 + 2*5^9 + 5^10 + 4*5^12 + 4*5^13 + O(5^14) : 1 + O(5^20)), 0]
-        ---------
-        [(1 + 4*5 + 5^3 + 3*5^4 + 3*5^6 + 2*5^9 + 5^11 + 5^12 + 2*5^13 + O(5^14) : 3 + 2*5 + 2*5^2 + 3*5^3 + 2*5^4 + 4*5^5 + 3*5^6 + 3*5^7 + 2*5^8 + 2*5^9 +
-        5^10 + 4*5^12 + 4*5^13 + O(5^14) : 1 + O(5^20)), (3 + 5 + 4*5^2 + 3*5^3 + 5^4 + 4*5^5 + 5^6 + 4*5^7 + 4*5^8 + 2*5^9 + 4*5^10 + 3*5^11 + 3*5^12 +
-        2*5^13 + O(5^14) : 4 + 3*5^2 + 3*5^3 + 5^4 + 5^6 + 5^7 + 2*5^8 + 2*5^9 + 3*5^10 + 4*5^11 + O(5^14) : 1 + O(5^20)), 0]
-        ---------
-
     """
-
-    #Trivial cases: TO DO (cf. Theorem 1.6, 1.7 (1) of [Bia19])
-    #Non-trivial cases:
     print("This is Quadratic Chabauty for elliptic curves over imaginary quadratic fields")
     L=E.base_field()
     h=L.class_number()
