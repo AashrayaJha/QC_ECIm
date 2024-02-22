@@ -8,7 +8,7 @@ attach("sieve_new.sage")
 
 
 R.<x> = PolynomialRing(QQ);  K.<a> = NumberField(R([1, -1, 1]))
-E = EllipticCurve([K([0,0]),K([-1,-1]),K([0,1]),K([0,1]),K([1,1])]) #This is the curve at https://www.lmfdb.org/EllipticCurve/2.0.3.1/134689.3/CMa/1
+E = EllipticCurve([K([0,0]),K([-1,-1]),K([0,1]),K([0,1]),K([1,1])]) #This is the curve at https://www.lmfdb.org/EllipticCurve/2.0.3.1/47089.9/CMa/1
 gens=E([-1,-2*a+1]),E([2*a,a-1])
 int_list=SmallIntegralPoints(E,7,gens)
 print("We found", len(int_list), "small points.")
