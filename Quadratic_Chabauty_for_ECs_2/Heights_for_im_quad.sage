@@ -2,8 +2,8 @@ r"""
 This code in this file is based on Francesca Bianchi's implementation at 
 https://github.com/bianchifrancesca/QC_elliptic_imaginary_quadratic_rank_2/blob/master/quad_chab_ell_im_quad.sage.
 
-We have extended the code so that we can also handle curves which are not base changes from the rationals and 
-"""
+We have extended the code so that we can also handle curves which are not base changes from the rationals. We have
+also removed the restiction that the curve has Tamagawa number 1 at split primes.
 REFERENCES:
 
 - [BBBM19] \J. S. Balakrishnan, A. Besser, F. Bianchi, J. S. Mueller,

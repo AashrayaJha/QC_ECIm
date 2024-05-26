@@ -124,7 +124,7 @@ def quad_chab_ell_im_quad(E, p, n, double_root_prec, int_list = [], gens=[], up_
     a4 = Eshort.a4()
     a6 = Eshort.a6()
     [u, rr, s, tt] = psi.tuple()
-    print(u,rr,s,tt)
+    #print(u,rr,s,tt)
     #embedding is chosen so that p1 is 'pi'
 
     H = HyperellipticCurve(x^3 + a4*x + a6)

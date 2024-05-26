@@ -465,7 +465,7 @@ def finding_nonWeierstrass_pts(A,B,EFp1,EFp2):
     return A,B #,C
 
 
-def SmallIntegralPoints_1(E,n,gens):
+def SmallIntegralPoints(E,n,gens):
     K=E.base_field()
     OK=K.maximal_order()
     IntegralPoints=[]
@@ -482,7 +482,8 @@ def SmallIntegralPoints_1(E,n,gens):
                 continue
     IntegralPoints.remove(E([0,1,0]))            
     return IntegralPoints
-def SmallIntegralPoints(E,n):
+
+def SmallIntegralPoints_1(E,n):
     K=E.base_field()
     OK=K.maximal_order()
     a=OK.ring_generators()[0]

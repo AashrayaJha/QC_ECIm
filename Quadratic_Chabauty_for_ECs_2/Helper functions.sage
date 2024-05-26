@@ -1,4 +1,4 @@
-def mofandE2prime(E,p1,M,prec=20,algorithm="auto",check=False)
+def mofandE2prime(E,p1,M,prec=20,algorithm="auto",check=False):
     
     r"""Returns the matrix of Frobenius on the Monsky Washnitzer cohomology of
     the short Weierstrass model of the minimal model of the elliptic curve and E2 for 
